@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Entity;
+namespace MeetupOrganizing\Domain\Entity;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

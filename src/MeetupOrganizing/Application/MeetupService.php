@@ -5,33 +5,36 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Application;
 
 use InvalidArgumentException;
-use MeetupOrganizing\Entity\Clock;
-use MeetupOrganizing\Entity\Meetup;
-use MeetupOrganizing\Entity\MeetupId;
-use MeetupOrganizing\Entity\MeetupRepository;
-use MeetupOrganizing\Entity\ScheduledDate;
-use MeetupOrganizing\Entity\UserId;
-use MeetupOrganizing\Entity\UserRepository;
+use MeetupOrganizing\Domain\Clock;
+use MeetupOrganizing\Domain\Entity\Meetup;
+use MeetupOrganizing\Domain\Entity\MeetupId;
+use MeetupOrganizing\Domain\Entity\MeetupSchedulerRepositoryInterface;
+use MeetupOrganizing\Domain\Entity\UserRepositoryInterface;
+use MeetupOrganizing\Domain\Entity\ScheduledDate;
+use MeetupOrganizing\Domain\Entity\UserId;
 
 class MeetupService
 {
     /**
-     * @var MeetupRepository
+     * @var MeetupSchedulerRepositoryInterface
      */
-    private MeetupRepository $repository;
+    private MeetupSchedulerRepositoryInterface $repository;
 
     /**
-     * @var UserRepository
+     * @var UserRepositoryInterface
      */
-    private UserRepository $userRepository;
+    private UserRepositoryInterface $userRepository;
 
     /**
      * @var Clock
      */
     private Clock $clock;
 
-    public function __construct(UserRepository $userRepository, MeetupRepository $meetupRepository, Clock $clock)
-    {
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        MeetupSchedulerRepositoryInterface $meetupRepository,
+        Clock $clock
+    ) {
         $this->userRepository = $userRepository;
         $this->repository     = $meetupRepository;
         $this->clock          = $clock;

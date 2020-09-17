@@ -7,8 +7,8 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
-use MeetupOrganizing\SchemaManager;
-use MeetupOrganizing\ServiceContainer;
+use MeetupOrganizing\Infrastructure\SchemaManager;
+use MeetupOrganizing\Infrastructure\ServiceContainer;
 use PHPUnit\Framework\Assert;
 use RuntimeException;
 

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Command;
+namespace MeetupOrganizing\Infrastructure\Command;
 
 use Assert\Assert;
-use MeetupOrganizing\SchemaManager;
-use MeetupOrganizing\ServiceContainer;
+use MeetupOrganizing\Infrastructure\SchemaManager;
+use MeetupOrganizing\Infrastructure\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\ApplicationTester;
 
