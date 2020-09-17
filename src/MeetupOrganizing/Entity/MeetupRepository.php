@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use Assert\Assert;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Statement;
+use PDO;
 
-final class MeetupRepository
+final class MeetupRepository implements ListMeetupsRepositoryInterface
 {
     private Connection $connection;
 
@@ -20,5 +23,49 @@ final class MeetupRepository
         $this->connection->insert('meetups', $meetup->getData());
 
         return MeetupId::fromInt((int)$this->connection->lastInsertId());
+    }
+
+    public function listUpcomingMeetups(Clock $clock): array
+    {
+        $statement = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from('meetups')
+            ->where('scheduledFor >= :now')
+            ->setParameter('now', $clock->currentTime()->format(ScheduledDate::DATE_TIME_FORMAT))
+            ->andWhere('wasCancelled = :wasNotCancelled')
+            ->setParameter('wasNotCancelled', 0)
+            ->execute();
+        Assert::that($statement)->isInstanceOf(Statement::class);
+
+        $records = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map(
+            static function (array $record) {
+                return MeetupForList::fromRecord($record);
+            },
+            $records
+        );
+    }
+
+    public function listPastMeetups(Clock $clock): array
+    {
+        $statement = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from('meetups')
+            ->where('scheduledFor < :now')
+            ->setParameter('now', $clock->currentTime()->format(ScheduledDate::DATE_TIME_FORMAT))
+            ->andWhere('wasCancelled = :wasNotCancelled')
+            ->setParameter('wasNotCancelled', 0)
+            ->execute();
+        Assert::that($statement)->isInstanceOf(Statement::class);
+
+        $records = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map(
+            static function (array $record) {
+                return MeetupForList::fromRecord($record);
+            },
+            $records
+        );
     }
 }

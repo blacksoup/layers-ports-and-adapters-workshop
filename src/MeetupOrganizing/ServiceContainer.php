@@ -231,8 +231,9 @@ final class ServiceContainer extends Container
         };
         $this[ListMeetupsController::class]    = function () {
             return new ListMeetupsController(
-                $this[Connection::class],
-                $this[TemplateRendererInterface::class]
+                $this[MeetupRepository::class],
+                $this[TemplateRendererInterface::class],
+                $this[Clock::class]
             );
         };
         $this[MeetupDetailsController::class]  = function () {
