@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Application;
 
+use DateTimeImmutable;
+use InvalidArgumentException;
 use MeetupOrganizing\Entity\Meetup;
 use MeetupOrganizing\Entity\MeetupId;
 use MeetupOrganizing\Entity\MeetupRepository;
@@ -32,6 +34,10 @@ class MeetupService
     public function scheduleMeetup(ScheduleMeetup $command): MeetupId
     {
         $scheduledate = ScheduledDate::fromString($command->scheduledFor());
+
+        if (!$scheduledate->isInTheFuture(new DateTimeImmutable())) {
+            throw new InvalidArgumentException('Schedule date cannot be in the past: ' . $scheduledate->asString());
+        }
 
         $user = $this->userRepository->getById(UserId::fromInt($command->organizerId()));
 

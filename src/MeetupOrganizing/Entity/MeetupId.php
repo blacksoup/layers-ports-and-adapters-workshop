@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use Assert\Assert;
+
 final class MeetupId
 {
     private int $id;
 
     private function __construct(int $id)
     {
+        Assert::that($id)->greaterThan(0);
         $this->id = $id;
     }
 

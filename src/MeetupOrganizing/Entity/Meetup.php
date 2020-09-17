@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use Assert\Assert;
+
 class Meetup
 {
     private ?MeetupId     $meetupId;
@@ -28,9 +30,16 @@ class Meetup
     ) {
         $this->meetupId     = $meetupId;
         $this->organizerId  = $organizerId;
+
+        Assert::that($name)->notEmpty();
         $this->name         = $name;
+
+        Assert::that($description)->notEmpty();
         $this->description  = $description;
         $this->scheduledFor = $scheduledFor;
+
+        Assert::that($wasCancelled)->greaterThan(-1);
+        Assert::that($wasCancelled)->lessThan(2);
         $this->wasCancelled = $wasCancelled;
     }
 
