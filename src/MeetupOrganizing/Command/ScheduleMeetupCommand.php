@@ -8,6 +8,7 @@ use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Entity\Meetup;
 use MeetupOrganizing\Entity\MeetupRepository;
+use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Entity\UserId;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -54,7 +55,7 @@ final class ScheduleMeetupCommand extends Command
             UserId::fromInt((int)$organizerId),
             $name,
             $description,
-            $scheduledFor
+            ScheduledDate::fromString($scheduledFor)
         );
 
         $this->meetupRepository->save($meetup);

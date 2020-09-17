@@ -74,7 +74,7 @@ final class ScheduleMeetupController
                         $this->session->getLoggedInUser()->userId(),
                         $formData['name'],
                         $formData['description'],
-                        $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
+                        ScheduledDate::fromString($formData['scheduleForDate'] . ' ' . $formData['scheduleForTime'])
                     )
                 );
 

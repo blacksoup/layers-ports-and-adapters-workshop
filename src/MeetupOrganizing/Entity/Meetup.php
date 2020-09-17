@@ -6,24 +6,24 @@ namespace MeetupOrganizing\Entity;
 
 class Meetup
 {
-    private ?MeetupId $meetupId;
+    private ?MeetupId     $meetupId;
 
-    private UserId    $organizerId;
+    private UserId        $organizerId;
 
-    private string    $name;
+    private string        $name;
 
-    private string    $description;
+    private string        $description;
 
-    private string    $scheduledFor;
+    private ScheduledDate $scheduledFor;
 
-    private int       $wasCancelled;
+    private int           $wasCancelled;
 
     public function __construct(
         ?MeetupId $meetupId,
         UserId $organizerId,
         string $name,
         string $description,
-        string $scheduledFor,
+        ScheduledDate $scheduledFor,
         int $wasCancelled = 0
     ) {
         $this->meetupId     = $meetupId;
@@ -38,7 +38,7 @@ class Meetup
         UserId $organizerId,
         string $name,
         string $description,
-        string $scheduledFor
+        ScheduledDate $scheduledFor
     ): Meetup {
         return new self(null, $organizerId, $name, $description, $scheduledFor);
     }
@@ -54,7 +54,7 @@ class Meetup
             'organizerId'  => $this->organizerId->asInt(),
             'name'         => $this->name,
             'description'  => $this->description,
-            'scheduledFor' => $this->scheduledFor,
+            'scheduledFor' => $this->scheduledFor->asString(),
             'wasCancelled' => $this->wasCancelled,
         ];
     }
