@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
-final class UserId
+final class MeetupId
 {
     private int $id;
 

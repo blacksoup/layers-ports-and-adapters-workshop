@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
@@ -6,6 +7,8 @@ namespace MeetupOrganizing\Controller;
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Exception;
+use MeetupOrganizing\Entity\Meetup;
+use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
@@ -16,24 +19,24 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 final class ScheduleMeetupController
 {
-    private Session $session;
+    private Session                   $session;
 
     private TemplateRendererInterface $renderer;
 
-    private RouterInterface $router;
+    private RouterInterface           $router;
 
-    private Connection $connection;
+    private MeetupRepository          $meetupRepository;
 
     public function __construct(
         Session $session,
         TemplateRendererInterface $renderer,
         RouterInterface $router,
-        Connection $connection
+        MeetupRepository $repository
     ) {
-        $this->session = $session;
-        $this->renderer = $renderer;
-        $this->router = $router;
-        $this->connection = $connection;
+        $this->session          = $session;
+        $this->renderer         = $renderer;
+        $this->router           = $router;
+        $this->meetupRepository = $repository;
     }
 
     public function __invoke(
@@ -42,9 +45,9 @@ final class ScheduleMeetupController
         callable $next
     ): ResponseInterface {
         $formErrors = [];
-        $formData = [
+        $formData   = [
             // This is a nice place to set some defaults
-            'scheduleForTime' => '20:00'
+            'scheduleForTime' => '20:00',
         ];
 
         if ($request->getMethod() === 'POST') {
@@ -66,16 +69,14 @@ final class ScheduleMeetupController
             }
 
             if (empty($formErrors)) {
-                $record = [
-                    'organizerId' => $this->session->getLoggedInUser()->userId()->asInt(),
-                    'name' => $formData['name'],
-                    'description' => $formData['description'],
-                    'scheduledFor' => $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime'],
-                    'wasCancelled' => 0
-                ];
-                $this->connection->insert('meetups', $record);
-
-                $meetupId = (int)$this->connection->lastInsertId();
+                $meetup = $this->meetupRepository->save(
+                    Meetup::create(
+                        $this->session->getLoggedInUser()->userId(),
+                        $formData['name'],
+                        $formData['description'],
+                        $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
+                    )
+                );
 
                 $this->session->addSuccessFlash('Your meetup was scheduled successfully');
 
@@ -83,7 +84,7 @@ final class ScheduleMeetupController
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetupId
+                            'id' => $meetup->asInt(),
                         ]
                     )
                 );
@@ -94,8 +95,8 @@ final class ScheduleMeetupController
             $this->renderer->render(
                 'schedule-meetup.html.twig',
                 [
-                    'formData' => $formData,
-                    'formErrors' => $formErrors
+                    'formData'   => $formData,
+                    'formErrors' => $formErrors,
                 ]
             )
         );
