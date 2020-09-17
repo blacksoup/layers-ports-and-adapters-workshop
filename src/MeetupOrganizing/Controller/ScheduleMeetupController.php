@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Controller;
 
 use Assert\Assert;
-use Doctrine\DBAL\Connection;
 use Exception;
-use MeetupOrganizing\Entity\Meetup;
-use MeetupOrganizing\Entity\MeetupRepository;
+use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
@@ -25,18 +23,18 @@ final class ScheduleMeetupController
 
     private RouterInterface           $router;
 
-    private MeetupRepository          $meetupRepository;
+    private MeetupService             $meetupService;
 
     public function __construct(
         Session $session,
         TemplateRendererInterface $renderer,
         RouterInterface $router,
-        MeetupRepository $repository
+        MeetupService $meetupService
     ) {
-        $this->session          = $session;
-        $this->renderer         = $renderer;
-        $this->router           = $router;
-        $this->meetupRepository = $repository;
+        $this->session       = $session;
+        $this->renderer      = $renderer;
+        $this->router        = $router;
+        $this->meetupService = $meetupService;
     }
 
     public function __invoke(
@@ -69,13 +67,11 @@ final class ScheduleMeetupController
             }
 
             if (empty($formErrors)) {
-                $meetup = $this->meetupRepository->save(
-                    Meetup::create(
-                        $this->session->getLoggedInUser()->userId(),
-                        $formData['name'],
-                        $formData['description'],
-                        ScheduledDate::fromString($formData['scheduleForDate'] . ' ' . $formData['scheduleForTime'])
-                    )
+                $meetupId = $this->meetupService->create(
+                    $this->session->getLoggedInUser()->userId()->asInt(),
+                    $formData['name'],
+                    $formData['description'],
+                    $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
                 );
 
                 $this->session->addSuccessFlash('Your meetup was scheduled successfully');
@@ -84,7 +80,7 @@ final class ScheduleMeetupController
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetup->asInt(),
+                            'id' => $meetupId->asInt(),
                         ]
                     )
                 );

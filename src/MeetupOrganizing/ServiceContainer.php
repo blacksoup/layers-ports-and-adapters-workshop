@@ -7,6 +7,7 @@ namespace MeetupOrganizing;
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
+use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Command\ConsoleApplication;
 use MeetupOrganizing\Command\ScheduleMeetupCommand;
 use MeetupOrganizing\Controller\CancelMeetupController;
@@ -185,6 +186,13 @@ final class ServiceContainer extends Container
             return new MeetupRepository($this[Connection::class]);
         };
 
+        /**
+         * Services
+         */
+        $this[MeetupService::class] = function () {
+            return new MeetupService($this[MeetupRepository::class]);
+        };
+
         /*
          * Controllers
          */
@@ -199,7 +207,7 @@ final class ServiceContainer extends Container
                 $this[Session::class],
                 $this[TemplateRendererInterface::class],
                 $this[RouterInterface::class],
-                $this[MeetupRepository::class]
+                $this[MeetupService::class]
             );
         };
         $this[CancelMeetupController::class]   = function () {
@@ -246,7 +254,7 @@ final class ServiceContainer extends Container
         };
 
         $this[ScheduleMeetupCommand::class] = function () {
-            return new ScheduleMeetupCommand($this[MeetupRepository::class]);
+            return new ScheduleMeetupCommand($this[MeetupService::class]);
         };
 
         $this->bootstrap();
