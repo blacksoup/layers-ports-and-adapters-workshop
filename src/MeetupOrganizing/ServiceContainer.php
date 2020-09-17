@@ -16,6 +16,7 @@ use MeetupOrganizing\Controller\MeetupDetailsController;
 use MeetupOrganizing\Controller\RsvpForMeetupController;
 use MeetupOrganizing\Controller\ScheduleMeetupController;
 use MeetupOrganizing\Controller\SwitchUserController;
+use MeetupOrganizing\Entity\Clock;
 use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Entity\RsvpRepository;
 use MeetupOrganizing\Entity\UserRepository;
@@ -187,12 +188,20 @@ final class ServiceContainer extends Container
         };
 
         /**
+         * Clock
+         */
+        $this[Clock::class] = static function () {
+            return new Clock();
+        };
+
+        /**
          * Services
          */
         $this[MeetupService::class] = function () {
             return new MeetupService(
                 $this[UserRepository::class],
-                $this[MeetupRepository::class]
+                $this[MeetupRepository::class],
+                $this[Clock::class]
             );
         };
 

@@ -14,13 +14,9 @@ class MeetupTest extends TestCase
      *
      * @param string $name
      * @param string $description
-     * @param int    $wasCancelled
      */
-    public function testMeetupParametersAreValidated(
-        string $name,
-        string $description,
-        int $wasCancelled = 0
-    ): void {
+    public function testMeetupParametersAreValidated(string $name, string $description): void
+    {
         $this->expectException(InvalidArgumentException::class);
 
         new Meetup(
@@ -29,32 +25,20 @@ class MeetupTest extends TestCase
             $name,
             $description,
             ScheduledDate::fromDateTime(new \DateTimeImmutable()),
-            $wasCancelled
+            false
         );
     }
 
     public function provideInvalidParameters(): array
     {
         return [
-            'Name cannot be empty'                 => [
+            'Name cannot be empty'        => [
                 '',
                 'Description',
-                0,
             ],
-            'Description cannot be empty'          => [
+            'Description cannot be empty' => [
                 '',
                 'Description',
-                0,
-            ],
-            'WasCancelled cannot be lower than 0'  => [
-                '',
-                'Description',
-                -1,
-            ],
-            'WasCancelled cannot be higher than 1' => [
-                '',
-                'Description',
-                2,
             ],
         ];
     }

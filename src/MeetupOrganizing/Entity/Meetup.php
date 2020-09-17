@@ -18,7 +18,7 @@ class Meetup
 
     private ScheduledDate $scheduledFor;
 
-    private int           $wasCancelled;
+    private bool          $wasCancelled;
 
     public function __construct(
         ?MeetupId $meetupId,
@@ -26,20 +26,18 @@ class Meetup
         string $name,
         string $description,
         ScheduledDate $scheduledFor,
-        int $wasCancelled = 0
+        bool $wasCancelled = false
     ) {
-        $this->meetupId     = $meetupId;
-        $this->organizerId  = $organizerId;
+        $this->meetupId    = $meetupId;
+        $this->organizerId = $organizerId;
 
         Assert::that($name)->notEmpty();
-        $this->name         = $name;
+        $this->name = $name;
 
         Assert::that($description)->notEmpty();
         $this->description  = $description;
         $this->scheduledFor = $scheduledFor;
 
-        Assert::that($wasCancelled)->greaterThan(-1);
-        Assert::that($wasCancelled)->lessThan(2);
         $this->wasCancelled = $wasCancelled;
     }
 
@@ -64,7 +62,7 @@ class Meetup
             'name'         => $this->name,
             'description'  => $this->description,
             'scheduledFor' => $this->scheduledFor->asString(),
-            'wasCancelled' => $this->wasCancelled,
+            'wasCancelled' => (int)$this->wasCancelled,
         ];
     }
 }
