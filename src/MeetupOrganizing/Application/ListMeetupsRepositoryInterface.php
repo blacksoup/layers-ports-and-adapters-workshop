@@ -3,7 +3,7 @@
 namespace MeetupOrganizing\Application;
 
 use MeetupOrganizing\Domain\Clock;
-use MeetupOrganizing\Domain\Entity\MeetupForList;
+use MeetupOrganizing\Domain\Meetup\MeetupForList;
 
 interface ListMeetupsRepositoryInterface
 {

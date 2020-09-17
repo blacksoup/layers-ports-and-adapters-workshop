@@ -1,6 +1,9 @@
 <?php
 
-namespace MeetupOrganizing\Domain\Entity;
+namespace MeetupOrganizing\Application;
+
+use MeetupOrganizing\Domain\User\User;
+use MeetupOrganizing\Domain\User\UserId;
 
 interface UserRepositoryInterface
 {

@@ -6,12 +6,10 @@ namespace MeetupOrganizing\Application;
 
 use InvalidArgumentException;
 use MeetupOrganizing\Domain\Clock;
-use MeetupOrganizing\Domain\Entity\Meetup;
-use MeetupOrganizing\Domain\Entity\MeetupId;
-use MeetupOrganizing\Domain\Entity\MeetupSchedulerRepositoryInterface;
-use MeetupOrganizing\Domain\Entity\UserRepositoryInterface;
-use MeetupOrganizing\Domain\Entity\ScheduledDate;
-use MeetupOrganizing\Domain\Entity\UserId;
+use MeetupOrganizing\Domain\Meetup\Meetup;
+use MeetupOrganizing\Domain\Meetup\MeetupId;
+use MeetupOrganizing\Domain\ScheduledDate;
+use MeetupOrganizing\Domain\User\UserId;
 
 class MeetupService
 {

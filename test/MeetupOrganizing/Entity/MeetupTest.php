@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Domain\Entity;
 
 use InvalidArgumentException;
+use MeetupOrganizing\Domain\Meetup\Meetup;
+use MeetupOrganizing\Domain\Meetup\MeetupId;
+use MeetupOrganizing\Domain\ScheduledDate;
+use MeetupOrganizing\Domain\User\UserId;
 use PHPUnit\Framework\TestCase;
 
 class MeetupTest extends TestCase

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure\Controller;
 
 use Assert\Assert;
-use MeetupOrganizing\Domain\Entity\UserId;
-use MeetupOrganizing\Domain\Entity\UserRepositoryInterface;
+use MeetupOrganizing\Domain\User\UserId;
+use MeetupOrganizing\Application\UserRepositoryInterface;
 use RuntimeException;
 use MeetupOrganizing\Infrastructure\Repository\UserRepository;
 use MeetupOrganizing\Infrastructure\Session;

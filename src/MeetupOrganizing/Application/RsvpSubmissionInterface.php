@@ -1,6 +1,8 @@
 <?php
 
-namespace MeetupOrganizing\Domain\Entity;
+namespace MeetupOrganizing\Application;
+
+use MeetupOrganizing\Domain\Rsvp;
 
 interface RsvpSubmissionInterface
 {

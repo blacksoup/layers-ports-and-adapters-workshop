@@ -8,7 +8,7 @@ use Assert\Assert;
 use Exception;
 use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Application\ScheduleMeetup;
-use MeetupOrganizing\Domain\Entity\ScheduledDate;
+use MeetupOrganizing\Domain\ScheduledDate;
 use MeetupOrganizing\Infrastructure\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

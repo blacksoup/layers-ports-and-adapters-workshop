@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\Domain\Entity\User;
-use MeetupOrganizing\Domain\Entity\UserId;
+use MeetupOrganizing\Domain\User\User;
+use MeetupOrganizing\Domain\User\UserId;
 use MeetupOrganizing\Infrastructure\Repository\UserRepository;
 
 final class Session

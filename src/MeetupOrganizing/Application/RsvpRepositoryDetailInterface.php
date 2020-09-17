@@ -2,7 +2,7 @@
 
 namespace MeetupOrganizing\Application;
 
-use MeetupOrganizing\Domain\Entity\Rsvp;
+use MeetupOrganizing\Domain\Rsvp;
 
 interface RsvpRepositoryDetailInterface
 {

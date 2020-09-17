@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure\Repository;
 
-use MeetupOrganizing\Domain\Entity\User;
-use MeetupOrganizing\Domain\Entity\UserId;
-use MeetupOrganizing\Domain\Entity\UserRepositoryInterface;
+use MeetupOrganizing\Domain\User\User;
+use MeetupOrganizing\Domain\User\UserId;
+use MeetupOrganizing\Application\UserRepositoryInterface;
 use RuntimeException;
 
 final class UserRepository implements UserRepositoryInterface

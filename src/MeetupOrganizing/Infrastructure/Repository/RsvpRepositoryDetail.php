@@ -7,8 +7,8 @@ use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Application\RsvpRepositoryDetailInterface;
-use MeetupOrganizing\Domain\Entity\Rsvp;
-use MeetupOrganizing\Domain\Entity\RsvpSubmissionInterface;
+use MeetupOrganizing\Domain\Rsvp;
+use MeetupOrganizing\Application\RsvpSubmissionInterface;
 use PDO;
 
 final class RsvpRepositoryDetail implements RsvpSubmissionInterface, RsvpRepositoryDetailInterface

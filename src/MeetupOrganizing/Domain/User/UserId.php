@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Domain\Entity;
+namespace MeetupOrganizing\Domain\User;
 
 final class UserId
 {

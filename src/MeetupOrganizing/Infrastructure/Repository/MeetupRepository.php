@@ -9,11 +9,11 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Application\ListMeetupsRepositoryInterface;
 use MeetupOrganizing\Domain\Clock;
-use MeetupOrganizing\Domain\Entity\Meetup;
-use MeetupOrganizing\Domain\Entity\MeetupForList;
-use MeetupOrganizing\Domain\Entity\MeetupId;
-use MeetupOrganizing\Domain\Entity\MeetupSchedulerRepositoryInterface;
-use MeetupOrganizing\Domain\Entity\ScheduledDate;
+use MeetupOrganizing\Domain\Meetup\Meetup;
+use MeetupOrganizing\Domain\Meetup\MeetupForList;
+use MeetupOrganizing\Domain\Meetup\MeetupId;
+use MeetupOrganizing\Application\MeetupSchedulerRepositoryInterface;
+use MeetupOrganizing\Domain\ScheduledDate;
 use PDO;
 
 final class MeetupRepository implements ListMeetupsRepositoryInterface, MeetupSchedulerRepositoryInterface
